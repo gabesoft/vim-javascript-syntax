@@ -105,6 +105,7 @@ syntax keyword javaScriptHtmlElemProperties       className  clientHeight  clien
 syntax keyword javaScriptEventListenerKeywords    blur click focus mouseover mouseout load item
 
 syntax keyword javaScriptEventListenerMethods     scrollIntoView  addEventListener  dispatchEvent  removeEventListener preventDefault stopPropagation
+syntax keyword JavaScriptBuiltinFunctions         console require
 " }}}
 " DOM/HTML5/CSS specified things {{{
     " Web API Interfaces (very long list of keywords) {{{
@@ -159,7 +160,7 @@ syntax keyword javaScriptEventListenerMethods     scrollIntoView  addEventListen
     endif
 " end DOM/HTML/CSS specified things }}}
 " Code blocks"{{{
-syntax cluster javaScriptAll       contains=javaScriptComment,javaScriptLineComment,javaScriptDocComment,javaScriptString,javaScriptRegexpString,javaScriptNumber,javaScriptFloat,javaScriptLabel,javaScriptSource,javaScriptWebAPI,javaScriptOperator,javaScriptBoolean,javaScriptNull,javaScriptFuncKeyword,javaScriptConditional,javaScriptGlobal,javaScriptRepeat,javaScriptBranch,javaScriptStatement,javaScriptGlobalObjects,javaScriptMessage,javaScriptIdentifier,javaScriptExceptions,javaScriptReserved,javaScriptDeprecated,javaScriptDomErrNo,javaScriptDomNodeConsts,javaScriptHtmlEvents,javaScriptDotNotation,javaScriptBrowserObjects,javaScriptDOMObjects,javaScriptAjaxObjects,javaScriptPropietaryObjects,javaScriptDOMMethods,javaScriptHtmlElemProperties,javaScriptDOMProperties,javaScriptEventListenerKeywords,javaScriptEventListenerMethods,javaScriptAjaxProperties,javaScriptAjaxMethods,javaScriptFuncArg
+syntax cluster javaScriptAll       contains=javaScriptComment,javaScriptLineComment,javaScriptDocComment,javaScriptString,javaScriptRegexpString,javaScriptNumber,javaScriptFloat,javaScriptLabel,javaScriptSource,javaScriptWebAPI,javaScriptOperator,javaScriptBoolean,javaScriptNull,javaScriptFuncKeyword,javaScriptConditional,javaScriptGlobal,javaScriptRepeat,javaScriptBranch,javaScriptStatement,javaScriptGlobalObjects,javaScriptMessage,javaScriptIdentifier,javaScriptExceptions,javaScriptReserved,javaScriptDeprecated,javaScriptDomErrNo,javaScriptDomNodeConsts,javaScriptHtmlEvents,javaScriptDotNotation,javaScriptBrowserObjects,javaScriptDOMObjects,javaScriptAjaxObjects,javaScriptPropietaryObjects,javaScriptDOMMethods,javaScriptHtmlElemProperties,javaScriptDOMProperties,javaScriptEventListenerKeywords,javaScriptEventListenerMethods,javaScriptAjaxProperties,javaScriptAjaxMethods,javaScriptFuncArg,javaScriptBuiltinFunctions
 
 if main_syntax == "javascript"
     syntax sync clear
@@ -171,16 +172,18 @@ endif
 syntax keyword javaScriptFuncKeyword     function contained
 syntax match   javascriptFuncName        /[a-zA-Z_1-9]*/ contained
 syntax region  javaScriptFuncExp         start=/\w\+\s\==\s\=function\>/ end="\([^)]*\)" contains=javaScriptFuncEq,javaScriptFuncKeyword,javaScriptFuncArg keepend
+syntax region  javaScriptFuncExp         start=/\w\+\s\=:\s\=function\>/ end="\([^)]*\)" contains=javaScriptFuncColon,javaScriptFuncKeyword,javaScriptFuncArg keepend
 syntax match   javaScriptFuncArg         "\(([^()]*)\)" contains=javaScriptParens,javaScriptFuncComma contained
 syntax match   javaScriptFuncComma       /,/ contained
 syntax match   javaScriptFuncEq          /=/ contained
+syntax match   JavaScriptFuncColon       /:/ contained
 syntax region  javaScriptFuncDef         start="\<function\>" end="{\@=" contains=javaScriptFuncKeyword,javascriptFuncName,javaScriptFuncArg keepend
 "}}}
 " Braces, Parens, symbols, colons {{{
 syntax match javaScriptBraces       "[{}\[\]]"
 syntax match javaScriptParens       "[()]"
 syntax match javaScriptOpSymbols    "=\{1,3}\|!==\|!=\|<\|>\|>=\|<=\|++\|+=\|--\|-="
-syntax match javaScriptEndColons    "[;,]"
+syntax match javaScriptEndColons    "[;,.:]"
 syntax match javaScriptLogicSymbols "\(&&\)\|\(||\)"
 "}}}
 " JavaScriptFold Function {{{
@@ -241,7 +244,7 @@ if version >= 508 || !exists("did_javascript_syn_inits")
     HiLink javaScriptSpecial                Special
     HiLink javaScriptSource                 Special
     HiLink javaScriptGlobalObjects          Special
-    HiLink javaScriptExceptions             Special
+    HiLink javaScriptExceptions             Operator
 
     HiLink javaScriptDeprecated             Exception
     HiLink javaScriptError                  Error
@@ -273,13 +276,15 @@ if version >= 508 || !exists("did_javascript_syn_inits")
     HiLink javaScriptAjaxProperties         Label
 
     HiLink javaScriptFuncKeyword            Function
-    HiLink javaScriptFuncName               htmlTagName
+    HiLink javaScriptFuncName               Title
     HiLink javaScriptFuncDef                PreProc
     HiLink javaScriptFuncExp                Title
     "HiLink javaScriptFuncArg                Underlined
-    HiLink javaScriptFuncArg                PreProc
+    HiLink javaScriptFuncArg                Special
     HiLink javaScriptFuncComma              Operator
     HiLink javaScriptFuncEq                 Operator
+    HiLink javaScriptFuncColon              Operator
+    HiLink javaScriptBuiltinFunctions       PreProc
 
     HiLink javaScriptHtmlEvents             Constant
     HiLink javaScriptHtmlElemProperties     Label
