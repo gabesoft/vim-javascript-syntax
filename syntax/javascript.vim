@@ -209,7 +209,7 @@ if version >= 508 || !exists("did_javascript_syn_inits")
     endif
     HiLink javaScriptEndColons              Operator
     HiLink javaScriptOpSymbols              Operator
-    HiLink javaScriptLogicSymbols           Boolean
+    HiLink javaScriptLogicSymbols           Operator
     HiLink javaScriptBraces                 Function
     HiLink javaScriptParens                 Operator
 
