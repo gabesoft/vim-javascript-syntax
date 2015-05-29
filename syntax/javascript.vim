@@ -172,7 +172,7 @@ endif
 " Function and arguments highlighting {{{
 syntax keyword javaScriptFuncKeyword     function contained
 syntax match   javascriptFuncName        /[a-zA-Z_1-9]*/ contained
-syntax region  javaScriptFuncExp         start=/\w\+\s\==\s\=function\>/ end="\([^)]*\)" contains=javaScriptFuncEq,javaScriptFuncKeyword,javaScriptFuncArg keepend
+syntax region  javaScriptFuncExp         start=/\w\+\s\{-}\s\==\s\=function\>/ end="\([^)]*\)" contains=javaScriptFuncEq,javaScriptFuncKeyword,javaScriptFuncArg keepend
 syntax region  javaScriptFuncExp         start=/\w\+\s\{-}:\s\=function\>/ end="\([^)]*\)" contains=javaScriptFuncColon,javaScriptFuncKeyword,javaScriptFuncArg keepend
 syntax match   javaScriptFuncArg         "\(([^()]*)\)" contains=javaScriptParens,javaScriptFuncComma contained
 syntax match   javaScriptFuncComma       /,/ contained
