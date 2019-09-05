@@ -79,8 +79,10 @@ endif
 "}}}
 " Strings, Numbers and Regex Highlight {{{
 syntax match   javaScriptSpecial          "\\\d\d\d\|\\."
+syntax region  javaScriptTemplateSpecial  contained matchgroup=javaScriptTemplateBraces start=+${+ end=+}+ contains=javaScriptExpression keepend
 syntax region  javaScriptString           start=+"+  skip=+\\\\\|\\"+  end=+"\|$+   contains=javaScriptSpecial,@htmlPreproc
 syntax region  javaScriptString           start=+'+  skip=+\\\\\|\\'+  end=+'\|$+   contains=javaScriptSpecial,@htmlPreproc
+syntax region  javaScriptTemplateString   start=+`+  skip=+\\`+        end=+`+      contains=javaScriptTemplateSpecial,javaScriptSpecial,@htmlPreproc
 
 syntax match   javaScriptSpecialCharacter "'\\.'"
 syntax match   javaScriptNumber           "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
@@ -161,7 +163,7 @@ syntax keyword JavaScriptBuiltinFunctions         console require
     endif
 " end DOM/HTML/CSS specified things }}}
 " Code blocks"{{{
-syntax cluster javaScriptAll       contains=javaScriptComment,javaScriptLineComment,javaScriptDocComment,javaScriptString,javaScriptRegexpString,javaScriptNumber,javaScriptFloat,javaScriptLabel,javaScriptSource,javaScriptWebAPI,javaScriptOperator,javaScriptBoolean,javaScriptNull,javaScriptFuncKeyword,javaScriptConditional,javaScriptGlobal,javaScriptRepeat,javaScriptBranch,javaScriptStatement,javaScriptGlobalObjects,javaScriptMessage,javaScriptIdentifier,javaScriptExceptions,javaScriptReserved,javaScriptDeprecated,javaScriptDomErrNo,javaScriptDomNodeConsts,javaScriptHtmlEvents,javaScriptDotNotation,javaScriptBrowserObjects,javaScriptDOMObjects,javaScriptAjaxObjects,javaScriptPropietaryObjects,javaScriptDOMMethods,javaScriptHtmlElemProperties,javaScriptDOMProperties,javaScriptEventListenerKeywords,javaScriptEventListenerMethods,javaScriptAjaxProperties,javaScriptAjaxMethods,javaScriptFuncArg,javaScriptBuiltinFunctions,javaScriptModule
+syntax cluster javaScriptAll       contains=javaScriptComment,javaScriptLineComment,javaScriptDocComment,javaScriptString,javaScriptTemplateString,javaScriptRegexpString,javaScriptNumber,javaScriptFloat,javaScriptLabel,javaScriptSource,javaScriptWebAPI,javaScriptOperator,javaScriptBoolean,javaScriptNull,javaScriptFuncKeyword,javaScriptConditional,javaScriptGlobal,javaScriptRepeat,javaScriptBranch,javaScriptStatement,javaScriptGlobalObjects,javaScriptMessage,javaScriptIdentifier,javaScriptExceptions,javaScriptReserved,javaScriptDeprecated,javaScriptDomErrNo,javaScriptDomNodeConsts,javaScriptHtmlEvents,javaScriptDotNotation,javaScriptBrowserObjects,javaScriptDOMObjects,javaScriptAjaxObjects,javaScriptPropietaryObjects,javaScriptDOMMethods,javaScriptHtmlElemProperties,javaScriptDOMProperties,javaScriptEventListenerKeywords,javaScriptEventListenerMethods,javaScriptAjaxProperties,javaScriptAjaxMethods,javaScriptFuncArg,javaScriptBuiltinFunctions,javaScriptModule
 
 if main_syntax == "javascript"
     syntax sync clear
@@ -181,11 +183,12 @@ syntax match   JavaScriptFuncColon       /:/ contained
 syntax region  javaScriptFuncDef         start="\<function\>" end="{\@=" contains=javaScriptFuncKeyword,javascriptFuncName,javaScriptFuncArg keepend
 "}}}
 " Braces, Parens, symbols, colons {{{
-syntax match javaScriptBraces       "[{}\[\]]"
-syntax match javaScriptParens       "[()]"
-syntax match javaScriptOpSymbols    "=\{1,3}\|!==\|!=\|<\|>\|>=\|<=\|++\|+=\|--\|-="
-syntax match javaScriptEndColons    "[;,.:]"
-syntax match javaScriptLogicSymbols "\(&&\)\|\(||\)"
+syntax match javaScriptBraces         "[{}\[\]]"
+syntax match javaScriptTemplateBraces "[{}]"
+syntax match javaScriptParens         "[()]"
+syntax match javaScriptOpSymbols      "=\{1,3}\|!==\|!=\|<\|>\|>=\|<=\|++\|+=\|--\|-="
+syntax match javaScriptEndColons      "[;,.:]"
+syntax match javaScriptLogicSymbols   "\(&&\)\|\(||\)"
 "}}}
 " JavaScriptFold Function {{{
 
@@ -211,6 +214,7 @@ if version >= 508 || !exists("did_javascript_syn_inits")
     HiLink javaScriptOpSymbols              Operator
     HiLink javaScriptLogicSymbols           Operator
     HiLink javaScriptBraces                 Function
+    HiLink javaScriptTemplateBraces         Function
     HiLink javaScriptParens                 Operator
 
     HiLink javaScriptComment                Comment
@@ -223,6 +227,7 @@ if version >= 508 || !exists("did_javascript_syn_inits")
     HiLink javaScriptDocParam               Function
 
     HiLink javaScriptString                 String
+    HiLink javaScriptTemplateString         String
     HiLink javaScriptRegexpString           String
 
     HiLink javaScriptNumber                 Number
@@ -243,6 +248,7 @@ if version >= 508 || !exists("did_javascript_syn_inits")
     HiLink javaScriptBoolean                Boolean
     HiLink javaScriptLabel                  Label
     HiLink javaScriptSpecial                Special
+    HiLink javaScriptTemplateSpecial        Special
     HiLink javaScriptSource                 Special
     HiLink javaScriptGlobalObjects          Special
     HiLink javaScriptExceptions             Operator
